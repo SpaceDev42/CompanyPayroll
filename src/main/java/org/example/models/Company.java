@@ -1,13 +1,22 @@
 package org.example.models;
 
+import org.example.interfaces.EmployeesSorting;
+
 import java.util.*;
 
-public class Company {
-    private List<Employee> employees;
+import static org.example.models.JobPosition.*;
+import static org.example.models.JobPosition.AREA_CHIEF;
+
+public class Company implements EmployeesSorting {
+    private final List<Employee> employees;
 
     public Company() {
         employees = new ArrayList<>();
         addEmployees();
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
     private void addEmployees() {
@@ -45,18 +54,13 @@ public class Company {
         employees.add(new Technician("25", "Diego Herrera", "44", "M", "Calle Olmo 5055", "1976-07-07"));
     }
 
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public List<Employee> getEmployeesByLastName() {
+    public List<Employee> sortEmployeesByLastName() {
         List<Employee> sortedEmployees = new ArrayList<>(employees);
         sortedEmployees.sort(Comparator.comparing(e -> e.getEmployeeName().split(" ")[1]));
         return sortedEmployees;
     }
 
-    public List<Employee> getEmployeesByNetSalary(boolean descending) {
+    public List<Employee> sortEmployeesByNetSalary(boolean descending) {
         List<Employee> sortedEmployees = new ArrayList<>(employees);
         sortedEmployees.sort(Comparator.comparingDouble(Employee::calculateNetSalary));
         if (descending) {
@@ -65,24 +69,25 @@ public class Company {
         return sortedEmployees;
     }
 
-    public Map<String, Integer> countEmployeesByRole() {
-        Map<String, Integer> roles = new HashMap<>();
-        roles.put("Manager", 0);
-        roles.put("Technician", 0);
-        roles.put("AreaChief", 0);
-        roles.put("Supervisor", 0);
+    public Map<JobPosition, Integer> countEmployeesByRole() {
+        Map<JobPosition, Integer> roles = new HashMap<>();
+        roles.put(MANAGER, 0);
+        roles.put(TECHNICIAN, 0);
+        roles.put(AREA_CHIEF, 0);
+        roles.put(SUPERVISOR, 0);
 
         for (Employee employee : employees) {
             if (employee instanceof Manager) {
-                roles.put("Manager", roles.get("Manager") + 1);
+                roles.put(MANAGER, roles.get(MANAGER) + 1);
             } else if (employee instanceof Technician) {
-                roles.put("Technician", roles.get("Technician") + 1);
+                roles.put(TECHNICIAN, roles.get(TECHNICIAN) + 1);
             } else if (employee instanceof AreaChief) {
-                roles.put("AreaChief", roles.get("AreaChief") + 1);
+                roles.put(AREA_CHIEF, roles.get(AREA_CHIEF) + 1);
             } else if (employee instanceof Supervisor) {
-                roles.put("Supervisor", roles.get("Supervisor") + 1);
+                roles.put(JobPosition.SUPERVISOR, roles.get(JobPosition.SUPERVISOR) + 1);
             }
         }
+
         return roles;
     }
 }

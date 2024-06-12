@@ -53,26 +53,3 @@ public abstract class Employee {
     }
 }
 
-class Manager extends Employee {
-    public Manager(String id, String name, String age, String gender, String address, String birthDate) {
-        super(id, name, age, gender, address, birthDate, 5000);
-    }
-}
-
-class Technician extends Employee {
-    public Technician(String id, String name, String age, String gender, String address, String birthDate) {
-        super(id, name, age, gender, address, birthDate, 350);
-    }
-}
-
-class AreaChief extends Employee {
-    public AreaChief(String id, String name, String age, String gender, String address, String birthDate) {
-        super(id, name, age, gender, address, birthDate, 1500);
-    }
-}
-
-class Supervisor extends Employee {
-    public Supervisor(String id, String name, String age, String gender, String address, String birthDate) {
-        super(id, name, age, gender, address, birthDate, 750);
-    }
-}
