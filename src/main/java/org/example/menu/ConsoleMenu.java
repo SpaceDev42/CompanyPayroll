@@ -50,7 +50,7 @@ public class ConsoleMenu implements MenuPresentation {
 
     @Override
     public void presentOptions() {
-        int option;
+        int option = 0;
         Scanner scanner = new Scanner(System.in);
 
         do {
@@ -61,8 +61,12 @@ public class ConsoleMenu implements MenuPresentation {
             System.out.println("4. Salir");
             System.out.print("Seleccione una opción: ");
 
-            option = scanner.nextInt();
-            scanner.nextLine(); // Clear buffer
+            try {
+                option = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Opción no válida. Intente de nuevo.");
+                continue;
+            }
 
             switch (option) {
                 case 1:
